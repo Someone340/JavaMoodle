@@ -85,5 +85,7 @@ public class CustomHashMap<K, V> {
         System.out.println(test.get("Test1"));
         test.remove("Test1");
         System.out.println(test.get("Test1"));
+        test.remove("Test2");
+        System.out.println(test.get("Test2"));
     }
 }
