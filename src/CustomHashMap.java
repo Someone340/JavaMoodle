@@ -1,4 +1,6 @@
-public class CustomHashMap<K, V> {
+import java.util.HashMap;
+
+public class CustomHashMap<K, V> implements CustomMap<K, V>{
     private static class Node<K, V> {
         final int hash;
         final K key;
@@ -27,10 +29,12 @@ public class CustomHashMap<K, V> {
         buckets = new Node[CAPACITY];
     }
 
-    private int hash(K key) {
+    @Override
+    public int hash(Object key) {
         return (key == null) ? 0 : Math.abs(key.hashCode() % CAPACITY);
     }
 
+    @Override
     public void put(K key, V value) {
         int index = hash(key);
         Node<K, V> node = buckets[index];
@@ -52,6 +56,7 @@ public class CustomHashMap<K, V> {
         }
     }
 
+    @Override
     public V get(K key) {
         int index = hash(key);
         Node<K, V> node = buckets[index];
@@ -62,6 +67,7 @@ public class CustomHashMap<K, V> {
         return null;
     }
 
+    @Override
     public void remove(K key) {
         int index = hash(key);
         Node<K, V> node = buckets[index];
@@ -85,5 +91,7 @@ public class CustomHashMap<K, V> {
         System.out.println(test.get("Test1"));
         test.remove("Test1");
         System.out.println(test.get("Test1"));
+        test.remove("Test2");
+        System.out.println(test.get("Test2"));
     }
 }
