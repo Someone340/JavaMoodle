@@ -1,4 +1,4 @@
-import java.util.HashMap;
+package org.customMap;
 
 public class CustomHashMap<K, V> implements CustomMap<K, V>{
     private static class Node<K, V> {
