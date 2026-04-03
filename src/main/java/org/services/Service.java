@@ -1,14 +1,48 @@
 package org.services;
 
-import org.user.User;
-
+import org.entity.UserEntity;
 import java.time.LocalDateTime;
 
+/**
+ * Интерфейс для управления бизнес-логикой приложения
+ */
 public interface Service {
-    void createUser(User user);
-    User readUser(int id);
-    void updateUser(User user);
+
+    /**
+     * Метод для создания нового пользователя
+     * @param user объект, содержащий данные нового пользователя
+     */
+    void createUser(UserEntity user);
+
+    /**
+     * Метод для получения информации о конкретном пользователе по его идентификатору
+     * @param id уникальный идентификатор пользователя
+     * @return возвращает найденный объект UserEntity
+     */
+    UserEntity readUser(int id);
+
+    /**
+     * Метод, обновляющий данные о пользователе
+     * @param user объект для обновления данных
+     */
+    void updateUser(UserEntity user);
+
+    /**
+     * метод предназначенный для удаления пользователя по его ID
+     * @param id уникальный идентификатор пользователя
+     */
     void deleteUser(int id);
+
+    /**
+     * Метод для консольного отображения всех строк из базы данных
+     */
     void printAll();
+
+    /**
+     * Вспомогательный метод, используемый при обновлении данных у пользователя.
+     * Предназначен для получения данных о времени создания строки.
+     * @param id уникальный идентификатор пользователя
+     * @return возвращает дату создания пользователя
+     */
     LocalDateTime getDateById(int id);
 }

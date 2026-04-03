@@ -1,8 +1,7 @@
 package org.example;
 
-import org.user.User;
+import org.entity.UserEntity;
 import org.services.UserService;
-
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.Scanner;
@@ -22,7 +21,7 @@ public class ConsoleInterface {
         System.out.println("Enter age: ");
         age = scan.nextInt();
 
-        User user = new User(name, email, age, date);
+        UserEntity user = new UserEntity(name, email, age, date);
         userService.createUser(user);
     }
 
@@ -41,7 +40,7 @@ public class ConsoleInterface {
         age = scan.nextInt();
         LocalDateTime date = userService.getDateById(id);
 
-        User user = new User(id, name, email, age, date);
+        UserEntity user = new UserEntity(id, name, email, age, date);
         userService.updateUser(user);
     }
 

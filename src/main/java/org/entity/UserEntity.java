@@ -1,35 +1,46 @@
-package org.user;
+package org.entity;
 
-import jakarta.persistence.*;
-
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.SequenceGenerator;
+import jakarta.persistence.Column;
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "users")
-public class User {
+public class UserEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "users_id_seq")
+    @SequenceGenerator(name = "users_id_seq", sequenceName = "users_id_seq", allocationSize = 1)
     private int id;
 
+    @Column (name = "name")
     private String name;
+
+    @Column (name = "email")
     private String email;
+
+    @Column (name = "age")
     private int age;
 
     @Column (name = "created_at")
     private LocalDateTime createdAt;
 
-    public User() {
+    public UserEntity() {
     }
 
-    public User(String name, String email, int age, LocalDateTime createdAt) {
+    public UserEntity(String name, String email, int age, LocalDateTime createdAt) {
         this.name = name;
         this.email = email;
         this.age = age;
         this.createdAt = createdAt;
     }
 
-    public User(int id, String name, String email, int age, LocalDateTime createdAt) {
+    public UserEntity(int id, String name, String email, int age, LocalDateTime createdAt) {
         this.id = id;
         this.name = name;
         this.email = email;
