@@ -1,9 +1,14 @@
 package org.DAO;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.services.UserService;
 import org.utils.HybernateSessionFactory;
 import org.entity.UserEntity;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 /**
@@ -11,6 +16,9 @@ import java.util.List;
  */
 
 public class UserDAOClass implements UserDAO{
+
+    /** логгер */
+    private static final Logger logger = LogManager.getLogger(UserDAOClass.class);
 
     /**
      * Метод, выполняющий поиск объекта по его ID
@@ -34,11 +42,11 @@ public class UserDAOClass implements UserDAO{
             transaction = session.beginTransaction();
             session.save(user);
             transaction.commit();
-            System.out.println("Created successfully!");
+            logger.info("Created successfully!");
         } catch (Exception e) {
             if (transaction != null)
                 transaction.rollback();
-            e.printStackTrace();
+            logger.error("Error while saving: ", e);
         } finally {
             if (session != null && session.isOpen())
                 session.close();
@@ -57,11 +65,11 @@ public class UserDAOClass implements UserDAO{
             transaction = session.beginTransaction();
             session.update(user);
             transaction.commit();
-            System.out.println("Updated successfully!");
+            logger.info("Updated successfully!");
         } catch (Exception e) {
             if (transaction != null)
                 transaction.rollback();
-            e.printStackTrace();
+            logger.error("Error while updating: ", e);
         } finally {
             if (session != null && session.isOpen())
                 session.close();
@@ -80,11 +88,11 @@ public class UserDAOClass implements UserDAO{
             transaction = session.beginTransaction();
             session.delete(findByID(id));
             transaction.commit();
-            System.out.println("Deleted successfully!");
+            logger.info("Deleted successfully!");
         } catch (Exception e) {
             if (transaction != null)
                 transaction.rollback();
-            e.printStackTrace();
+            logger.error("Error while deleting: ", e);
         } finally {
             if (session != null && session.isOpen())
                 session.close();
