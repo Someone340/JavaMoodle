@@ -15,8 +15,6 @@
     <log4j.version>2.25.4</log4j.version>
     <mackito.version>5.23.0</mackito.version>
     <testcontainers.version>1.21.4</testcontainers.version>
-    <testcontainers.junit.version>1.21.4</testcontainers.junit.version>
-    <testcontainers.postgresql.version>1.21.4</testcontainers.postgresql.version>
   </properties>
 
   <dependencyManagement>
@@ -79,13 +77,13 @@
     <dependency>
       <groupId>org.testcontainers</groupId>
       <artifactId>junit-jupiter</artifactId>
-      <version>${testcontainers.junit.version}</version>
+      <version>${testcontainers.version}</version>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.testcontainers</groupId>
       <artifactId>postgresql</artifactId>
-      <version>${testcontainers.postgresql.version}</version>
+      <version>${testcontainers.version}</version>
       <scope>test</scope>
     </dependency>
   </dependencies>
