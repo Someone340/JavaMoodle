@@ -24,4 +24,18 @@ public class HybernateSessionFactory {
         }
         return sessionFactory;
     }
+
+    public static void shutdownSessionFactory() {
+        if (sessionFactory != null && !sessionFactory.isClosed()) {
+            sessionFactory.close();
+        }
+        sessionFactory = null;
+    }
+
+    public static void setSessionFactory(SessionFactory factory) {
+        if (sessionFactory != null && !sessionFactory.isClosed()) {
+            sessionFactory.close();
+        }
+        sessionFactory = factory;
+    }
 }
