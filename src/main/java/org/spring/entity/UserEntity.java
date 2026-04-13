@@ -1,4 +1,4 @@
-package org.entity;
+package org.spring.entity;
 
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.Entity;
