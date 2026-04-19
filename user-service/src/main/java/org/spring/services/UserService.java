@@ -2,6 +2,7 @@ package org.spring.services;
 
 import org.spring.DTO.UserDTO;
 import org.spring.entity.UserEntity;
+import org.spring.producers.UserProducerService;
 import org.spring.repository.UserRepository;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,9 +13,11 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserService{
 
     private final UserRepository userRepository;
+    private final UserProducerService producerService;
 
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, UserProducerService producerService) {
         this.userRepository = userRepository;
+        this.producerService = producerService;
     }
 
     public List<UserDTO> findAll() {
@@ -33,6 +36,8 @@ public class UserService{
         entity.setAge(dto.getAge());
 
         UserEntity saved = userRepository.save(entity);
+        producerService.sendNotification(saved.getEmail(), "CREATE");
+
         return mapToDTO(saved);
     }
 
@@ -56,6 +61,10 @@ public class UserService{
     }
 
     public void delete(int id) {
+        producerService.sendNotification(userRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("User not found with id: " + id))
+                .getEmail(), "DELETE");
+
         userRepository.deleteById(id);
     }
 

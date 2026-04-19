@@ -1,6 +1,6 @@
-package org.services;
+package org.spring.services;
 
-import org.entity.UserEntity;
+import org.spring.entity.UserEntity;
 import java.time.LocalDateTime;
 
 /**
