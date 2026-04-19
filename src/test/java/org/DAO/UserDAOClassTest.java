@@ -23,7 +23,7 @@ class UserDAOClassTest {
     private UserDAOClass userDAO;
 
     @Container
-    private final PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>("postgres:15.2")
+    private static final PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>("postgres:15.2")
             .withDatabaseName("testdb")
             .withUsername("testuser")
             .withPassword("testpass");
@@ -52,6 +52,14 @@ class UserDAOClassTest {
 
     @AfterEach
     void tearDown() {
+        try (var session = HybernateSessionFactory.getSessionFactory().openSession()) {
+            session.beginTransaction();
+            session.createNativeQuery("TRUNCATE TABLE users RESTART IDENTITY CASCADE").executeUpdate();
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            System.err.println("Error: " + e.getMessage());
+        }
+
         HybernateSessionFactory.shutdownSessionFactory();
     }
 
