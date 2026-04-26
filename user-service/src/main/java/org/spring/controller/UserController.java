@@ -29,8 +29,8 @@ public class UserController {
 
     @GetMapping
     public List<UserDTO> getAll() {
-        return userService.findAll();
         logger.info("Called method getAll");
+        return userService.findAll();
     }
 
     @GetMapping("/{id}")
