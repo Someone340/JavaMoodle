@@ -1,13 +1,15 @@
 package org.spring.DTO;
 
+import org.spring.enums.Actions;
+
 public class UserEvent {
     private String email;
-    private String action;
+    private Actions action;
 
     public UserEvent() {
     }
 
-    public UserEvent(String email, String action) {
+    public UserEvent(String email, Actions action) {
         this.email = email;
         this.action = action;
     }
@@ -21,10 +23,10 @@ public class UserEvent {
     }
 
     public String getAction() {
-        return action;
+        return action.toString();
     }
 
-    public void setAction(String action) {
+    public void setAction(Actions action) {
         this.action = action;
     }
 }

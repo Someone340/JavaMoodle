@@ -2,6 +2,7 @@ package org.spring;
 
 import org.junit.jupiter.api.Test;
 import org.spring.DTO.UserEvent;
+import org.spring.enums.Actions;
 import org.spring.services.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -27,7 +28,7 @@ class NotificationServiceTest {
 
     @Test
     void mockTest() {
-        UserEvent event = new UserEvent("test@example.com", "CREATE");
+        UserEvent event = new UserEvent("test@example.com", Actions.CREATE);
 
         kafkaTemplate.send("user-topic", event);
 

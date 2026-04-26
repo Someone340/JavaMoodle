@@ -2,6 +2,7 @@ package org.spring.services;
 
 import org.spring.DTO.UserDTO;
 import org.spring.entity.UserEntity;
+import org.spring.enums.Actions;
 import org.spring.producers.UserProducerService;
 import org.spring.repository.UserRepository;
 import java.util.ArrayList;
@@ -36,7 +37,7 @@ public class UserService{
         entity.setAge(dto.getAge());
 
         UserEntity saved = userRepository.save(entity);
-        producerService.sendNotification(saved.getEmail(), "CREATE");
+        producerService.sendNotification(saved.getEmail(), Actions.CREATE);
 
         return mapToDTO(saved);
     }
@@ -63,7 +64,7 @@ public class UserService{
     public void delete(int id) {
         producerService.sendNotification(userRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("User not found with id: " + id))
-                .getEmail(), "DELETE");
+                .getEmail(), Actions.DELETE);
 
         userRepository.deleteById(id);
     }
