@@ -1,9 +1,11 @@
 package org.spring.DTO;
 
+import org.springframework.hateoas.RepresentationModel;
+
 /**
  * DTO для сущности пользователя
  */
-public class UserDTO {
+public class UserDTO extends RepresentationModel<UserDTO> {
     /** Уникальный идентификатор пользователя */
     private Integer id;
 
@@ -24,6 +26,8 @@ public class UserDTO {
         this.age = age;
     }
 
+    public UserDTO() {
+    }
     /**
      * Возвращает идентификатор пользователя.
      * @return id пользователя

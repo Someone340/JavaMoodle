@@ -21,16 +21,12 @@ public class UserService{
         this.producerService = producerService;
     }
 
-    public List<UserDTO> findAll() {
-        List<UserEntity> entities = userRepository.findAll();
-        List<UserDTO> dtos = new ArrayList<>();
-        for (UserEntity entity : entities) {
-            dtos.add(mapToDTO(entity));
-        }
-        return dtos;
+    public List<UserEntity> findAll() {
+        return userRepository.findAll();
     }
 
-    public UserDTO create(UserDTO dto) {
+    @Transactional
+    public UserEntity create(UserDTO dto) {
         UserEntity entity = new UserEntity();
         entity.setName(dto.getName());
         entity.setEmail(dto.getEmail());
@@ -38,43 +34,28 @@ public class UserService{
 
         UserEntity saved = userRepository.save(entity);
         producerService.sendNotification(saved.getEmail(), Actions.CREATE);
-
-        return mapToDTO(saved);
+        return saved;
     }
 
-    public UserDTO findById(int id) {
-        UserEntity entity = userRepository.findById(id)
+    public UserEntity findById(int id) {
+        return userRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("User not found with id: " + id));
-        return mapToDTO(entity);
     }
 
     @Transactional
-    public UserDTO update(int id, UserDTO dto) {
-        UserEntity entity = userRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("User not found with id: " + id));
+    public UserEntity update(int id, UserDTO dto) {
+        UserEntity entity = findById(id);
 
         entity.setName(dto.getName());
         entity.setEmail(dto.getEmail());
         entity.setAge(dto.getAge());
 
-        UserEntity updated = userRepository.save(entity);
-        return mapToDTO(updated);
+        return userRepository.save(entity);
     }
 
     public void delete(int id) {
-        producerService.sendNotification(userRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("User not found with id: " + id))
-                .getEmail(), Actions.DELETE);
-
+        UserEntity entity = findById(id);
+        producerService.sendNotification(entity.getEmail(), Actions.DELETE);
         userRepository.deleteById(id);
-    }
-
-    private UserDTO mapToDTO(UserEntity entity) {
-        return new UserDTO(
-                entity.getId(),
-                entity.getName(),
-                entity.getEmail(),
-                entity.getAge()
-        );
     }
 }
